@@ -65,7 +65,7 @@ export const PieceReserve = ({
                 'w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center text-3xl md:text-4xl transition-all duration-200',
                 player === 'white' ? 'piece-white' : 'piece-black',
                 'bg-card/50 hover:bg-card',
-                isSelected && 'ring-2 ring-game-gold animate-pulse-gold',
+                isSelected && 'ring-2 ring-game-gold bg-card',
                 !canPlace && 'cursor-not-allowed opacity-50'
               )}
               style={{
