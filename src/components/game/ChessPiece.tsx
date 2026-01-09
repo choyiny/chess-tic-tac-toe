@@ -8,6 +8,7 @@ interface ChessPieceProps {
   isWinning?: boolean;
   onClick?: () => void;
   animate?: boolean;
+  pieceId?: string; // Unique ID for layout animations
 }
 
 export const ChessPiece = ({
@@ -16,26 +17,28 @@ export const ChessPiece = ({
   isWinning = false,
   onClick,
   animate = true,
+  pieceId,
 }: ChessPieceProps) => {
   return (
     <motion.div
-      initial={animate ? { scale: 0, rotate: -180 } : false}
+      layoutId={pieceId}
+      initial={animate ? { scale: 0.5, opacity: 0 } : false}
       animate={{
         scale: 1,
-        rotate: 0,
+        opacity: 1,
         y: isWinning ? [0, -5, 0] : 0,
       }}
       transition={{
-        type: 'spring',
-        stiffness: 260,
-        damping: 20,
+        layout: { type: 'spring', stiffness: 400, damping: 30, duration: 0.15 },
+        scale: { duration: 0.1 },
+        opacity: { duration: 0.1 },
         y: isWinning ? { repeat: Infinity, duration: 0.8 } : undefined,
       }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
       className={cn(
-        'text-5xl md:text-6xl cursor-pointer select-none transition-all duration-200',
+        'text-5xl md:text-6xl cursor-pointer select-none transition-all duration-100',
         piece.player === 'white' ? 'piece-white' : 'piece-black',
         isSelected && 'drop-shadow-[0_0_12px_hsl(var(--gold))]',
         isWinning && 'drop-shadow-[0_0_16px_hsl(var(--gold-glow))]'

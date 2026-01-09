@@ -2,6 +2,7 @@ export type PieceType = 'pawn' | 'knight' | 'bishop' | 'rook';
 export type Player = 'white' | 'black';
 
 export interface Piece {
+  id: string; // Unique identifier for animation tracking
   type: PieceType;
   player: Player;
   pawnDirection: 'left' | 'right'; // For pawn horizontal movement
