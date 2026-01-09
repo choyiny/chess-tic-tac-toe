@@ -26,23 +26,23 @@ export const getPawnMoves = (
   board: (Piece | null)[][]
 ): Square[] => {
   const moves: Square[] = [];
-  const direction = piece.pawnDirection === 'up' ? -1 : 1;
+  const direction = piece.pawnDirection === 'right' ? 1 : -1;
 
-  // Forward move (only if empty)
-  const newRow = row + direction;
-  if (isValidSquare(newRow, col) && !board[newRow][col]) {
-    moves.push({ row: newRow, col });
+  // Horizontal move (only if empty)
+  const newCol = col + direction;
+  if (isValidSquare(row, newCol) && !board[row][newCol]) {
+    moves.push({ row, col: newCol });
   }
 
-  // Diagonal captures
-  for (const dc of [-1, 1]) {
-    const diagCol = col + dc;
+  // Diagonal captures (in the direction of movement)
+  for (const dr of [-1, 1]) {
+    const diagRow = row + dr;
     if (
-      isValidSquare(newRow, diagCol) &&
-      board[newRow][diagCol] &&
-      board[newRow][diagCol]!.player !== piece.player
+      isValidSquare(diagRow, newCol) &&
+      board[diagRow][newCol] &&
+      board[diagRow][newCol]!.player !== piece.player
     ) {
-      moves.push({ row: newRow, col: diagCol });
+      moves.push({ row: diagRow, col: newCol });
     }
   }
 
@@ -211,17 +211,19 @@ export const checkWinner = (board: (Piece | null)[][]): { winner: Player | null;
 export const createPiece = (type: PieceType, player: Player): Piece => ({
   type,
   player,
-  pawnDirection: player === 'white' ? 'up' : 'down',
+  pawnDirection: player === 'white' ? 'right' : 'left',
   hasReachedEnd: false,
 });
 
-export const shouldPawnReverseDirection = (piece: Piece, newRow: number): boolean => {
+export const shouldPawnReverseDirection = (piece: Piece, newCol: number): boolean => {
   if (piece.type !== 'pawn') return false;
   
-  if (piece.pawnDirection === 'up' && newRow === 0) {
+  // White pawns reverse when reaching the right edge (col 3)
+  if (piece.pawnDirection === 'right' && newCol === 3) {
     return true;
   }
-  if (piece.pawnDirection === 'down' && newRow === 3) {
+  // Black pawns reverse when reaching the left edge (col 0)
+  if (piece.pawnDirection === 'left' && newCol === 0) {
     return true;
   }
   return false;

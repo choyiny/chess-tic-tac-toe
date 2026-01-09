@@ -67,7 +67,7 @@ export const useGameState = () => {
       // Handle pawn placement direction for captured pawns
       if (piece.type === 'pawn') {
         // When placing a pawn, it always starts moving toward opponent's side
-        piece.pawnDirection = prev.currentPlayer === 'white' ? 'up' : 'down';
+        piece.pawnDirection = prev.currentPlayer === 'white' ? 'right' : 'left';
         piece.hasReachedEnd = false;
       }
       
@@ -119,8 +119,8 @@ export const useGameState = () => {
 
       // Handle pawn direction reversal
       let movedPiece = { ...piece };
-      if (shouldPawnReverseDirection(movedPiece, toRow)) {
-        movedPiece.pawnDirection = movedPiece.pawnDirection === 'up' ? 'down' : 'up';
+      if (shouldPawnReverseDirection(movedPiece, toCol)) {
+        movedPiece.pawnDirection = movedPiece.pawnDirection === 'right' ? 'left' : 'right';
         movedPiece.hasReachedEnd = true;
       }
 
