@@ -208,7 +208,10 @@ export const checkWinner = (board: (Piece | null)[][]): { winner: Player | null;
   return { winner: null, winningSquares: [] };
 };
 
+let pieceCounter = 0;
+
 export const createPiece = (type: PieceType, player: Player): Piece => ({
+  id: `${player}-${type}-${++pieceCounter}-${Date.now()}`,
   type,
   player,
   pawnDirection: player === 'white' ? 'right' : 'left',

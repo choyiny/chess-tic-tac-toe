@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { GameState, Square } from '@/types/game';
 import { BoardSquare } from './BoardSquare';
 
@@ -22,6 +22,12 @@ export const GameBoard = ({ gameState, onSquareClick }: GameBoardProps) => {
   const isSelected = (row: number, col: number) =>
     selectedPiece?.row === row && selectedPiece?.col === col;
 
+  // Get piece ID for layout animations
+  const getPieceId = (row: number, col: number) => {
+    const piece = board[row][col];
+    return piece?.id;
+  };
+
   return (
     <motion.div
       initial={{ scale: 0.9, opacity: 0 }}
@@ -34,23 +40,26 @@ export const GameBoard = ({ gameState, onSquareClick }: GameBoardProps) => {
       
       {/* Board container */}
       <div className="relative bg-board-border p-2 md:p-3 rounded-xl shadow-2xl">
-        <div className="grid grid-cols-4 gap-0.5 md:gap-1 rounded-lg overflow-hidden">
-          {board.map((row, rowIndex) =>
-            row.map((piece, colIndex) => (
-              <BoardSquare
-                key={`${rowIndex}-${colIndex}`}
-                row={rowIndex}
-                col={colIndex}
-                piece={piece}
-                isSelected={isSelected(rowIndex, colIndex)}
-                isValidMove={isValidMove(rowIndex, colIndex)}
-                isCapture={isCapture(rowIndex, colIndex)}
-                isWinningSquare={isWinningSquare(rowIndex, colIndex)}
-                onClick={() => onSquareClick(rowIndex, colIndex)}
-              />
-            ))
-          )}
-        </div>
+        <LayoutGroup>
+          <div className="grid grid-cols-4 gap-0.5 md:gap-1 rounded-lg overflow-hidden">
+            {board.map((row, rowIndex) =>
+              row.map((piece, colIndex) => (
+                <BoardSquare
+                  key={`${rowIndex}-${colIndex}`}
+                  row={rowIndex}
+                  col={colIndex}
+                  piece={piece}
+                  pieceId={getPieceId(rowIndex, colIndex)}
+                  isSelected={isSelected(rowIndex, colIndex)}
+                  isValidMove={isValidMove(rowIndex, colIndex)}
+                  isCapture={isCapture(rowIndex, colIndex)}
+                  isWinningSquare={isWinningSquare(rowIndex, colIndex)}
+                  onClick={() => onSquareClick(rowIndex, colIndex)}
+                />
+              ))
+            )}
+          </div>
+        </LayoutGroup>
       </div>
     </motion.div>
   );
