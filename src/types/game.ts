@@ -4,7 +4,7 @@ export type Player = 'white' | 'black';
 export interface Piece {
   type: PieceType;
   player: Player;
-  pawnDirection: 'up' | 'down'; // For pawn reversal logic
+  pawnDirection: 'left' | 'right'; // For pawn horizontal movement
   hasReachedEnd: boolean; // Track if pawn has reached the opposite side
 }
 
