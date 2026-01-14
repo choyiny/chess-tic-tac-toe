@@ -36,12 +36,12 @@ export const GameBoard = ({ gameState, onSquareClick }: GameBoardProps) => {
       className="relative"
     >
       {/* Board shadow/glow */}
-      <div className="absolute -inset-2 bg-gradient-to-br from-game-gold/20 to-transparent rounded-xl blur-xl" />
+      <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-br from-game-gold/20 to-transparent rounded-lg sm:rounded-xl blur-lg sm:blur-xl" />
       
       {/* Board container */}
-      <div className="relative bg-board-border p-2 md:p-3 rounded-xl shadow-2xl">
+      <div className="relative bg-board-border p-1.5 sm:p-2 md:p-3 rounded-lg sm:rounded-xl shadow-2xl">
         <LayoutGroup>
-          <div className="grid grid-cols-4 gap-0.5 md:gap-1 rounded-lg overflow-hidden">
+          <div className="grid grid-cols-4 gap-0.5 rounded-md sm:rounded-lg overflow-hidden">
             {board.map((row, rowIndex) =>
               row.map((piece, colIndex) => (
                 <BoardSquare
