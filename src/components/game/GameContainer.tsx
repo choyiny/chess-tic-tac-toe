@@ -60,17 +60,15 @@ export const GameContainer = () => {
         onShowRules={() => setShowRules(true)}
       />
 
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-2 sm:gap-4 md:gap-8 w-full max-w-5xl flex-1">
-        {/* Game Board - Center */}
-        <div className="order-1 lg:order-2 flex-shrink-0 w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] mx-auto">
+      {/* Mobile layout: Board on top, reserves side by side below */}
+      <div className="flex flex-col lg:hidden items-center gap-2 sm:gap-4 w-full flex-1">
+        <div className="flex-shrink-0 w-full max-w-[280px] sm:max-w-[320px] mx-auto">
           <GameBoard
             gameState={gameState}
             onSquareClick={handleSquareClick}
           />
         </div>
-
-        {/* Reserves container - Side by side on mobile, separate on desktop */}
-        <div className="order-2 lg:order-1 lg:order-3 flex flex-row lg:flex-col gap-2 sm:gap-4 w-full lg:w-auto justify-center lg:contents">
+        <div className="flex flex-row gap-2 sm:gap-4 w-full justify-center">
           <PieceReserve
             pieces={gameState.whiteReserve}
             player="white"
@@ -88,6 +86,32 @@ export const GameContainer = () => {
             piecesPlaced={gameState.blackPiecesPlaced}
           />
         </div>
+      </div>
+
+      {/* Desktop layout: Player 1 left, Board center, Player 2 right */}
+      <div className="hidden lg:flex flex-row items-center justify-center gap-8 w-full max-w-5xl flex-1">
+        <PieceReserve
+          pieces={gameState.whiteReserve}
+          player="white"
+          isActive={gameState.currentPlayer === 'white' && !gameState.winner}
+          selectedPiece={gameState.currentPlayer === 'white' ? gameState.selectedReservePiece : null}
+          onSelectPiece={handleReservePieceClick}
+          piecesPlaced={gameState.whitePiecesPlaced}
+        />
+        <div className="flex-shrink-0 w-full max-w-[380px]">
+          <GameBoard
+            gameState={gameState}
+            onSquareClick={handleSquareClick}
+          />
+        </div>
+        <PieceReserve
+          pieces={gameState.blackReserve}
+          player="black"
+          isActive={gameState.currentPlayer === 'black' && !gameState.winner}
+          selectedPiece={gameState.currentPlayer === 'black' ? gameState.selectedReservePiece : null}
+          onSelectPiece={handleReservePieceClick}
+          piecesPlaced={gameState.blackPiecesPlaced}
+        />
       </div>
 
       {/* Winner Modal */}
