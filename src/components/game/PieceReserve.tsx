@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { PieceType, Player, PIECE_SYMBOLS } from '@/types/game';
+import { PieceType, Player } from '@/types/game';
 import { cn } from '@/lib/utils';
 
 interface PieceReserveProps {
@@ -10,6 +10,10 @@ interface PieceReserveProps {
   onSelectPiece: (piece: PieceType) => void;
   piecesPlaced: number;
 }
+
+const getPieceImage = (type: PieceType, player: Player): string => {
+  return `/pieces/${player}-${type}.svg`;
+};
 
 export const PieceReserve = ({
   pieces,
@@ -62,19 +66,18 @@ export const PieceReserve = ({
               onClick={() => canPlace && onSelectPiece(piece)}
               disabled={!canPlace}
               className={cn(
-                'w-9 h-9 sm:w-11 sm:h-11 md:w-14 md:h-14 rounded-md sm:rounded-lg flex items-center justify-center text-xl sm:text-2xl md:text-4xl transition-all duration-200',
-                player === 'white' ? 'piece-white' : 'piece-black',
+                'w-9 h-9 sm:w-11 sm:h-11 md:w-14 md:h-14 rounded-md sm:rounded-lg flex items-center justify-center transition-all duration-200',
                 'bg-card/50 hover:bg-card',
                 isSelected && 'ring-2 ring-game-gold bg-card',
                 !canPlace && 'cursor-not-allowed opacity-50'
               )}
-              style={{
-                textShadow: player === 'white'
-                  ? '0 1px 0 hsl(var(--player-white-accent)), 0 2px 4px rgba(0,0,0,0.3)'
-                  : '0 1px 0 hsl(var(--player-black-accent)), 0 2px 4px rgba(0,0,0,0.4)',
-              }}
             >
-              {PIECE_SYMBOLS[piece]}
+              <img
+                src={getPieceImage(piece, player)}
+                alt={`${player} ${piece}`}
+                className="w-7 h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 object-contain"
+                draggable={false}
+              />
             </motion.button>
           );
         })}

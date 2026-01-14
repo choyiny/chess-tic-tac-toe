@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Piece, PIECE_SYMBOLS } from '@/types/game';
+import { Piece, PieceType, Player } from '@/types/game';
 import { cn } from '@/lib/utils';
 
 interface ChessPieceProps {
@@ -10,6 +10,10 @@ interface ChessPieceProps {
   animate?: boolean;
   pieceId?: string; // Unique ID for layout animations
 }
+
+const getPieceImage = (type: PieceType, player: Player): string => {
+  return `/pieces/${player}-${type}.svg`;
+};
 
 export const ChessPiece = ({
   piece,
@@ -38,18 +42,17 @@ export const ChessPiece = ({
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
       className={cn(
-        'text-5xl md:text-6xl cursor-pointer select-none transition-all duration-100',
-        piece.player === 'white' ? 'piece-white' : 'piece-black',
+        'cursor-pointer select-none transition-all duration-100 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14',
         isSelected && 'drop-shadow-[0_0_12px_hsl(var(--gold))]',
         isWinning && 'drop-shadow-[0_0_16px_hsl(var(--gold-glow))]'
       )}
-      style={{
-        textShadow: piece.player === 'white'
-          ? '0 2px 0 hsl(var(--player-white-accent)), 0 4px 8px rgba(0,0,0,0.3)'
-          : '0 2px 0 hsl(var(--player-black-accent)), 0 4px 8px rgba(0,0,0,0.4)',
-      }}
     >
-      {PIECE_SYMBOLS[piece.type]}
+      <img
+        src={getPieceImage(piece.type, piece.player)}
+        alt={`${piece.player} ${piece.type}`}
+        className="w-full h-full object-contain"
+        draggable={false}
+      />
     </motion.div>
   );
 };
