@@ -53,16 +53,24 @@ export const GameContainer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-start py-6 px-4 md:py-10 md:px-8 overflow-auto">
+    <div className="min-h-[100dvh] bg-background flex flex-col items-center justify-start py-2 px-2 sm:py-6 sm:px-4 md:py-10 md:px-8">
       <GameHeader
         currentPlayer={gameState.currentPlayer}
         onReset={resetGame}
         onShowRules={() => setShowRules(true)}
       />
 
-      <div className="flex flex-col lg:flex-row items-stretch justify-center gap-4 md:gap-8 w-full max-w-5xl">
-        {/* Player 1 Reserve (White) - Left on desktop, below board on mobile */}
-        <div className="order-2 lg:order-1 flex-shrink-0">
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-2 sm:gap-4 md:gap-8 w-full max-w-5xl flex-1">
+        {/* Game Board - Center */}
+        <div className="order-1 lg:order-2 flex-shrink-0 w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] mx-auto">
+          <GameBoard
+            gameState={gameState}
+            onSquareClick={handleSquareClick}
+          />
+        </div>
+
+        {/* Reserves container - Side by side on mobile, separate on desktop */}
+        <div className="order-2 lg:order-1 lg:order-3 flex flex-row lg:flex-col gap-2 sm:gap-4 w-full lg:w-auto justify-center lg:contents">
           <PieceReserve
             pieces={gameState.whiteReserve}
             player="white"
@@ -71,18 +79,6 @@ export const GameContainer = () => {
             onSelectPiece={handleReservePieceClick}
             piecesPlaced={gameState.whitePiecesPlaced}
           />
-        </div>
-
-        {/* Game Board - Center */}
-        <div className="order-1 lg:order-2 flex-shrink-0 w-full max-w-[320px] md:max-w-[380px] mx-auto">
-          <GameBoard
-            gameState={gameState}
-            onSquareClick={handleSquareClick}
-          />
-        </div>
-
-        {/* Player 2 Reserve (Black) - Right on desktop, below board on mobile */}
-        <div className="order-3 flex-shrink-0">
           <PieceReserve
             pieces={gameState.blackReserve}
             player="black"
