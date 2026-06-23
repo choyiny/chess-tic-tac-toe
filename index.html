@@ -31,13 +31,62 @@
     <meta name="twitter:image" content="/og-image.png" />
     <meta name="twitter:image:alt" content="Chess Tic Tac Toe - Golden chess pieces on a wooden board" />
     
+    <!-- PWA / Mobile -->
+    <meta name="application-name" content="Chess Tic Tac Toe" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Chess Tic Tac Toe" />
+    <meta name="format-detection" content="telephone=no" />
+
     <!-- Theme Color -->
     <meta name="theme-color" content="#1a1410" />
     <meta name="msapplication-TileColor" content="#1a1410" />
+    <meta name="msapplication-navbutton-color" content="#1a1410" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/og-image.png" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Chess Tic Tac Toe",
+      "description": "Play Chess Tic Tac Toe - the award-winning game combining chess strategy with tic-tac-toe simplicity. Learn chess basics in minutes. Align 4 pieces to win! For 2 players, ages 6+.",
+      "genre": ["Strategy Game", "Board Game", "Educational Game"],
+      "numberOfPlayers": {
+        "@type": "QuantitativeValue",
+        "minValue": 2,
+        "maxValue": 2
+      },
+      "audience": {
+        "@type": "PeopleAudience",
+        "suggestedMinAge": 6
+      },
+      "url": "/",
+      "image": "/og-image.png",
+      "inLanguage": "en-US",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Chess Tic Tac Toe"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Chess Tic Tac Toe",
+      "url": "/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
 
   <body>
